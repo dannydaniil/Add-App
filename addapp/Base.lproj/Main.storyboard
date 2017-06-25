@@ -67,7 +67,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.059328660368919373" green="0.87008029222488403" blue="0.74880999326705933" alpha="0.61488655821917804" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.55443447828292847" green="0.90735375881195068" blue="0.84315782785415649" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="bYD-9D-lT1" firstAttribute="top" secondItem="CeL-5e-3vV" secondAttribute="top" constant="84" id="1ww-gN-lT2"/>
@@ -85,6 +85,7 @@
                                 </constraints>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="6Ci-7V-jLy" appends="YES" id="PYp-Pg-yk5"/>
+                                    <outletCollection property="gestureRecognizers" destination="qvZ-es-zzb" appends="YES" id="u3l-Xm-tKD"/>
                                 </connections>
                             </view>
                         </subviews>
@@ -102,13 +103,125 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="6Ci-7V-jLy">
+                <swipeGestureRecognizer direction="right" id="6Ci-7V-jLy" userLabel="presentCamera">
                     <connections>
                         <segue destination="Co3-MO-Wxt" kind="show" id="mED-VA-fdc"/>
                     </connections>
                 </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="up" id="qvZ-es-zzb" userLabel="presentList">
+                    <connections>
+                        <segue destination="Rzz-DM-dxa" kind="show" id="tPZ-gy-jCY"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1196" y="160.56971514242881"/>
+        </scene>
+        <!--ListVC-->
+        <scene sceneID="fdj-HL-wqb">
+            <objects>
+                <viewController id="Rzz-DM-dxa" customClass="ListVC" customModule="addapp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="86s-EN-oyj"/>
+                        <viewControllerLayoutGuide type="bottom" id="ruc-FO-IQ5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Hn9-HF-Bm7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z0P-8T-lR6">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xHb-Gd-W7g">
+                                        <rect key="frame" x="0.0" y="100" width="375" height="567"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="accountCell" rowHeight="55" id="On5-89-3VS" customClass="accountCell" customModule="addapp" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="375" height="55"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="On5-89-3VS" id="T1c-7C-bcP">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="54.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillProportionally" spacing="110" translatesAutoresizingMaskIntoConstraints="NO" id="ZHQ-Tx-rHX">
+                                                            <rect key="frame" x="29" y="4" width="317" height="31"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Facebook" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x8K-hD-t7a">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="158" height="31"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="158" id="IEa-M1-rsG"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="23"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RPx-zo-vPs">
+                                                                    <rect key="frame" x="268" y="0.0" width="51" height="31"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="49" id="Hzp-vu-Ck7"/>
+                                                                    </constraints>
+                                                                </switch>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="trailing" secondItem="RPx-zo-vPs" secondAttribute="trailing" id="IfZ-jb-pQR"/>
+                                                                <constraint firstItem="x8K-hD-t7a" firstAttribute="top" secondItem="ZHQ-Tx-rHX" secondAttribute="top" id="b93-GB-ByU"/>
+                                                                <constraint firstItem="RPx-zo-vPs" firstAttribute="top" secondItem="ZHQ-Tx-rHX" secondAttribute="top" id="c2h-11-NJH"/>
+                                                                <constraint firstItem="x8K-hD-t7a" firstAttribute="leading" secondItem="ZHQ-Tx-rHX" secondAttribute="leading" id="x2f-1K-GEc"/>
+                                                            </constraints>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="ZHQ-Tx-rHX" firstAttribute="centerX" secondItem="T1c-7C-bcP" secondAttribute="centerX" id="7RC-8V-kDi"/>
+                                                        <constraint firstItem="ZHQ-Tx-rHX" firstAttribute="top" secondItem="T1c-7C-bcP" secondAttribute="top" constant="4" id="rjH-dH-DeH"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <connections>
+                                                    <outlet property="accountTypeLbl" destination="x8K-hD-t7a" id="kjX-ac-MzN"/>
+                                                    <outlet property="accountTypeSwitch" destination="RPx-zo-vPs" id="O4U-lV-fg7"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose accounts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ecb-PT-U3e">
+                                        <rect key="frame" x="75.5" y="40" width="224.5" height="47"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="34"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.50175860875994993" green="1" blue="0.88624553633644187" alpha="0.62328767123287676" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstItem="Ecb-PT-U3e" firstAttribute="top" secondItem="z0P-8T-lR6" secondAttribute="top" constant="40" id="BVy-jP-mXa"/>
+                                    <constraint firstItem="Ecb-PT-U3e" firstAttribute="centerX" secondItem="z0P-8T-lR6" secondAttribute="centerX" id="M94-oi-OlY"/>
+                                    <constraint firstItem="Ecb-PT-U3e" firstAttribute="top" secondItem="z0P-8T-lR6" secondAttribute="top" constant="40" id="a3R-Gc-d3I"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="ruc-FO-IQ5" firstAttribute="top" secondItem="z0P-8T-lR6" secondAttribute="bottom" id="PGq-Bh-K6B"/>
+                            <constraint firstAttribute="trailing" secondItem="z0P-8T-lR6" secondAttribute="trailing" id="PZO-r8-7TE"/>
+                            <constraint firstItem="z0P-8T-lR6" firstAttribute="top" secondItem="Hn9-HF-Bm7" secondAttribute="top" id="U7i-Pj-VVs"/>
+                            <constraint firstItem="z0P-8T-lR6" firstAttribute="leading" secondItem="Hn9-HF-Bm7" secondAttribute="leading" id="f2m-mB-QAq"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="lhN-Ut-xuf" appends="YES" id="hBk-lL-6Dq"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="xHb-Gd-W7g" id="6uS-eU-e7b"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eFs-b3-wQD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="down" id="lhN-Ut-xuf" userLabel="presentHome">
+                    <connections>
+                        <action selector="swippedUp:" destination="Rzz-DM-dxa" id="5bc-Xc-vjK"/>
+                    </connections>
+                </swipeGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-1196" y="952.17391304347836"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="1c6-Fg-xV9">
@@ -116,7 +229,7 @@
                 <viewController id="Co3-MO-Wxt" customClass="ViewController" customModule="addapp" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WeP-gv-ogt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-279" y="160"/>
+            <point key="canvasLocation" x="-337" y="161"/>
         </scene>
     </scenes>
     <resources>

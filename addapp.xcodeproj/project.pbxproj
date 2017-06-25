@@ -18,6 +18,8 @@
 		5E03D8451EFE27F8003682B5 /* addappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E03D8441EFE27F8003682B5 /* addappUITests.swift */; };
 		5E03D8581EFE34CB003682B5 /* RoundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E03D8571EFE34CB003682B5 /* RoundImageView.swift */; };
 		5E03D85A1EFE390E003682B5 /* CameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E03D8591EFE390E003682B5 /* CameraVC.swift */; };
+		5E0C39F91EFF418100AA69B3 /* accountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0C39F81EFF418100AA69B3 /* accountCell.swift */; };
+		5EF7B5B51EFF3CD0003EF7D6 /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF7B5B41EFF3CD0003EF7D6 /* ListVC.swift */; };
 		916ADBB18E5B3EFFD281419A /* Pods_addapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BDAA75ED01421A3171D9543 /* Pods_addapp.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +61,8 @@
 		5E03D8461EFE27F8003682B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5E03D8571EFE34CB003682B5 /* RoundImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundImageView.swift; sourceTree = "<group>"; };
 		5E03D8591EFE390E003682B5 /* CameraVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVC.swift; sourceTree = "<group>"; };
+		5E0C39F81EFF418100AA69B3 /* accountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = accountCell.swift; sourceTree = "<group>"; };
+		5EF7B5B41EFF3CD0003EF7D6 /* ListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
 		6AD9FBF989B2B636124C948E /* Pods_addappTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_addappTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94B9BE106664EAE045877173 /* Pods-addapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-addapp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-addapp/Pods-addapp.debug.xcconfig"; sourceTree = "<group>"; };
 		B155815523BDDB6C5FD3CD6C /* Pods-addappTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-addappTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-addappTests/Pods-addappTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -152,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				5E03D8571EFE34CB003682B5 /* RoundImageView.swift */,
+				5E0C39F81EFF418100AA69B3 /* accountCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -168,6 +173,7 @@
 			children = (
 				5E03D8261EFE27F8003682B5 /* HomeVC.swift */,
 				5E03D8591EFE390E003682B5 /* CameraVC.swift */,
+				5EF7B5B41EFF3CD0003EF7D6 /* ListVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -479,7 +485,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E03D8271EFE27F8003682B5 /* HomeVC.swift in Sources */,
+				5EF7B5B51EFF3CD0003EF7D6 /* ListVC.swift in Sources */,
 				5E03D8251EFE27F8003682B5 /* AppDelegate.swift in Sources */,
+				5E0C39F91EFF418100AA69B3 /* accountCell.swift in Sources */,
 				5E03D8581EFE34CB003682B5 /* RoundImageView.swift in Sources */,
 				5E03D85A1EFE390E003682B5 /* CameraVC.swift in Sources */,
 			);

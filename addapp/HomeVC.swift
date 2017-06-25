@@ -16,7 +16,7 @@ class HomeVC: UIViewController {
 
     
      @IBOutlet weak var generateQRBtn: UIButton!
-    @IBOutlet weak var imgQRCode: UIImageView!
+     @IBOutlet weak var imgQRCode: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
           }
@@ -42,7 +42,7 @@ class HomeVC: UIViewController {
         
         qrcodeImage = filter?.outputImage
         
-        //imgQRCode.image = convert(cmage: qrcodeImage)
+        imgQRCode.image = convert(cmage: qrcodeImage)
             
             displayQRCodeImage()
             
