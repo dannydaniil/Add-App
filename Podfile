@@ -7,8 +7,6 @@ target 'addapp' do
 
   # Pods for addapp
   pod 'BarcodeScanner'
-  pod 'Firebase'
-  pod 'Firebase/Core'
  
   target 'addappTests' do
     inherit! :search_paths

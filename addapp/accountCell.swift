@@ -12,22 +12,16 @@ class accountCell: UITableViewCell {
 
    
     @IBOutlet weak var accountTypeLbl: UILabel!
-    
-    @IBOutlet weak var accountTypeSwitch: UISwitch!
 
     func configureCell(accountType: String){
-        
-        
         accountTypeLbl.text = "\(accountType)"
-        
-        
-//        lowTemp.text = "\(forecast.lowtemp)"
-//        highTemp.text = "\(forecast.highTemp)"
-//        weatherType.text = forecast.weatherType
-//        dayLabel.text = forecast.date
-//        weatherIcon.image = UIImage(named: forecast.weatherType)
     }
     
+
     
+    @IBAction func switchFlipped(_ sender: Any) {
+        
+        
+    }
 
 }
