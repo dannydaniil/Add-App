@@ -10,11 +10,16 @@ import UIKit
 import CoreImage
 import BarcodeScanner
 import Contacts
+import CoreData
 
-class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorDelegate, BarcodeScannerDismissalDelegate {
+class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorDelegate, BarcodeScannerDismissalDelegate, NSFetchedResultsControllerDelegate {
     
+    @IBOutlet weak var nameLbl: UILabel!
     var qrcodeImage: CIImage!
     var encodedText: String!
+    
+    //must tell it what it will work with
+    var controller: NSFetchedResultsController<User>!
 
     
     @IBOutlet weak var imgQRCode: UIImageView!
@@ -22,21 +27,47 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
 
     override func viewDidLoad() {
         
-        if SignUpVC.isRegisteredUser {
+        
+        if fetchUserData().isRegistered == false {
+            performSegue(withIdentifier: "SignUpVC", sender: nil)
+        } else {
             
+            nameLbl.text = fetchUserData().firstName! + " " + fetchUserData().lastName!
+            
+        
+            super.viewDidLoad()
+            //createContact()
+        
+            //call only if any switch changed
+            presentQRBarcode()
         }
-            
-        super.viewDidLoad()
-        //createContact()
-        
-        
-        //call only if any switch changed
-        presentQRBarcode()
-        
-        //createContact()
-        
-        
     }
+    
+    func fetchUserData () -> User {
+        
+        let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
+        
+        let userSort = NSSortDescriptor(key: "firstName", ascending: false, selector: nil)
+        
+        //passing in the descriptor
+        fetchRequest.sortDescriptors = [userSort]
+
+        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        
+          controller.delegate = self
+          self.controller = controller
+        
+        //make fetch request
+        do{
+            try self.controller.performFetch()
+        } catch {
+            let error = error as NSError
+            print("\(error)")
+        }
+        
+        return controller.fetchedObjects![0]
+    }
+    
     
     @IBAction func swippedRight(_ sender: Any) {
         

@@ -9,11 +9,11 @@
 import UIKit
 import CoreData
 
+
 class SignUpVC: UIViewController {
     
-    
-    var isRegisteredUser = false
 
+    
     @IBOutlet weak var workNumberTextField: UITextField!
     @IBOutlet weak var LinkedInTextField: UITextField!
     @IBOutlet weak var SnapchatTextField: UITextField!
@@ -25,6 +25,8 @@ class SignUpVC: UIViewController {
     @IBOutlet weak var mobileNumberTextField: UITextField!
 
     override func viewDidLoad() {
+        
+        
         super.viewDidLoad()
     }
     
@@ -33,10 +35,11 @@ class SignUpVC: UIViewController {
         //create entity to be saved
          let user = User(context: context)
         
+        
         //save the attributes
         if let firstName = firstNameTextField.text {
             user.firstName = firstName
-            isRegisteredUser = true
+            user.isRegistered = true
         }
         if let lastName = lastNameTextField.text {
             user.lastName = lastName
@@ -64,6 +67,7 @@ class SignUpVC: UIViewController {
         }
         
         ad.saveContext()
+        //performSegue(withIdentifier: "HomeVC", sender: nil)
         dismiss(animated: true, completion: nil)
     }
 

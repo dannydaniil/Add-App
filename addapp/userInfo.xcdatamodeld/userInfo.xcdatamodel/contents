@@ -5,6 +5,7 @@
         <attribute name="facebookUsername" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="instagramUsername" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isRegistered" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="linkedInUsername" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mobileNumber" optional="YES" attributeType="String" syncable="YES"/>
@@ -12,6 +13,6 @@
         <attribute name="workNumber" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="195"/>
     </elements>
 </model>
