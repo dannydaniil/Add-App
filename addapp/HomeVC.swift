@@ -135,7 +135,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     
     // TODO:
     
-    @IBAction func swippedRight(_ sender: Any) {
+    @IBAction func swipeRight(_ sender: Any) {
         
         //present the scanner
         let controller = BarcodeScannerController()
@@ -145,14 +145,15 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         present(controller, animated: true, completion: nil)
     }
     
-    
     //3 scanner functions to be changed
     
     //handles identified QR Barcode
-    func barcodeScanner(_ controller: BarcodeScannerController, didCaptureCode code: String, type: String){
+    func barcodeScanner(_ controller: BarcodeScannerController, didCaptureCode code: String, type: String) {
         
         print(code)
-        print(type)
+        //print(type)
+        
+        decryptScannedCode(encryptedCode: code)
         
         let delayTime = DispatchTime.now() + Double(Int64(6 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
@@ -160,13 +161,20 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         }
     }
     
+    func decryptScannedCode(encryptedCode: String) {
+        
+        //print(stringToDictionary(text: encryptedCode)!)
+        //print(type(of:stringToDictionary(text: encryptedCode)!))
+        createContact(dic: stringToDictionary(text: encryptedCode)!)
+    }
+    
     //deals with error
-    func barcodeScanner(_ controller: BarcodeScannerController, didReceiveError error: Error){
+    func barcodeScanner(_ controller: BarcodeScannerController, didReceiveError error: Error) {
         print(error)
     }
     
     //dismisses view controller
-    func barcodeScannerDidDismiss(_ controller: BarcodeScannerController){
+    func barcodeScannerDidDismiss(_ controller: BarcodeScannerController) {
         dismiss(animated: true, completion: nil)
     }
 
@@ -221,17 +229,18 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         imgQRCode.image = convert(cmage: transformedImage)
     }
     
-    // I think it speaks for itself ==> adds new contact
-    func createContact() {
-        
+    //adds new contact to the contact book
+    func createContact(dic: Dictionary<String,String>) {
         // Creating a new contact
         let newContact = CNMutableContact()
-        newContact.givenName = "John"
-        newContact.familyName = "Appleseed"
+        newContact.givenName = dic["firstName"]!
+        newContact.familyName = dic["lastName"]!
+        //newContact.imageData = dic["profilePicture"]!
         
         // Saving contact
         let saveRequest = CNSaveRequest()
         let store = CNContactStore()
+        
         saveRequest.add(newContact, toContainerWithIdentifier:nil)
         try! store.execute(saveRequest)
     }
@@ -252,6 +261,17 @@ func dictionaryToString(dict: Dictionary<String, AnyObject>) -> String {
     }
     
     return datastring
+}
+
+func stringToDictionary(text: String) -> [String: String]? {
+    if let data = text.data(using: .utf8) {
+        do {
+            return try JSONSerialization.jsonObject(with: data, options: []) as? [String: String]
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    return nil
 }
 
 //convert from CIImage to UIImage

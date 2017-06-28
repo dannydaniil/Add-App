@@ -13,7 +13,7 @@ class ListVC : UIViewController, UITableViewDelegate,
 UITableViewDataSource, NSFetchedResultsControllerDelegate {
     
     var profiles = ["Mobile Number", "Work Number", "Email", "Facebook", "Instagram", "Snapchat", "LinkedIn", "Twitter", "Pinterest", "Vimeo", "Venmo", "Google+", "Reddit", "Tumblr"]
-    var profiles1 = ["Mobile Number", "Work Number", "Email", "Facebook", "Instagram", "Snapchat", "LinkedIn"]
+    var profiles1 = ["Mobile Number", "Work Number", "Email", "Facebook", "Instagram", "Snapchat", "LinkedIn", "Twitter"]
     var selectedProfiles = [String]()
     
     var accounts: Accounts?
@@ -66,7 +66,6 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
         cell.setCheckmark(selected: true)
         
         selectedProfiles.append(profiles[indexPath.row])
-        print(selectedProfiles)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -76,7 +75,6 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
         if let index = selectedProfiles.index(of: profiles[indexPath.row]) {
             selectedProfiles.remove(at: index)
         }
-        print(selectedProfiles)
     }
     
     //replicates the prototype cell
@@ -142,9 +140,7 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
             let error = error as NSError
             print("\(error)")
         }
-        
-        print(controller.fetchedObjects![0])
-        
+                
         if (controller.fetchedObjects?.isEmpty)! {
             return Accounts()
         }

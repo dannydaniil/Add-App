@@ -22,7 +22,8 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     @IBOutlet weak var facebookTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var mobileNumberTextField: UITextField!
-    
+    @IBOutlet weak var TwitterTextField: UITextField!
+
     //user can pick image
     var imagePicker = UIImagePickerController()
 
@@ -120,6 +121,13 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             user.linkedin = linkedInUsername
             if linkedInUsername.characters.count > 0 {
                 accounts.linkedin = true
+            }
+        }
+        
+        if let twitterUsername = TwitterTextField.text {
+            user.twitter = twitterUsername
+            if twitterUsername.characters.count > 0 {
+                accounts.twitter = true
             }
         }
         

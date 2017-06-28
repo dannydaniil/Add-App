@@ -2,7 +2,7 @@
 //  User+CoreDataProperties.swift
 //  
 //
-//  Created by Anmol Jain on 6/27/17.
+//  Created by Anmol Jain on 6/28/17.
 //
 //  This file was automatically generated and should not be edited.
 //
@@ -27,6 +27,7 @@ extension User {
     @NSManaged public var mobileNumber: String?
     @NSManaged public var profilePicture: NSData?
     @NSManaged public var snapchat: String?
+    @NSManaged public var twitter: String?
     @NSManaged public var workNumber: String?
 
 }
