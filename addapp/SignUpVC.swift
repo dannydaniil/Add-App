@@ -76,16 +76,16 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
      user.email = email
      }
      if let facebookUsername = facebookTextField.text {
-     user.facebookUsername = facebookUsername
+     user.facebook = facebookUsername
      }
      if let snapchatUsername = SnapchatTextField.text {
-     user.snapchatUsername = snapchatUsername
+     user.snapchat = snapchatUsername
      }
      if let instagramUsername = InstagramTextField.text {
-     user.instagramUsername = instagramUsername
+     user.instagram = instagramUsername
      }
      if let linkedInUsername = LinkedInTextField.text {
-     user.linkedInUsername = linkedInUsername
+     user.linkedin = linkedInUsername
      }
     if let selectedProfilePic = profilePicture.image {
             user.profilePicture = UIImagePNGRepresentation(selectedProfilePic) as NSData?
