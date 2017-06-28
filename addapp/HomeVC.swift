@@ -17,7 +17,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     @IBOutlet weak var nameLbl: UILabel!
     var qrcodeImage: CIImage!
     var encodedText: String!
-    
+    @IBOutlet weak var profilePic: RoundImageView!
     //must tell it what it will work with
     var controller: NSFetchedResultsController<User>!
 
@@ -26,22 +26,27 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+    
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if isRegisteredUser() == false {
+            performSegue(withIdentifier: "SignUpVC", sender: self)
         
-        
-        if fetchUserData().isRegistered == false {
-            performSegue(withIdentifier: "SignUpVC", sender: nil)
         } else {
-            
+
             nameLbl.text = fetchUserData().firstName! + " " + fetchUserData().lastName!
             
-        
-            super.viewDidLoad()
+            profilePic.image = UIImage(data: (fetchUserData().profilePicture as! NSData) as Data)
             //createContact()
-        
+            
             //call only if any switch changed
             presentQRBarcode()
         }
+
     }
+    
     
     func fetchUserData () -> User {
         
@@ -66,6 +71,35 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         }
         
         return controller.fetchedObjects![0]
+    }
+    
+    func isRegisteredUser () -> Bool {
+        
+        let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
+        
+        let userSort = NSSortDescriptor(key: "firstName", ascending: false, selector: nil)
+        
+        //passing in the descriptor
+        fetchRequest.sortDescriptors = [userSort]
+        
+        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        
+        controller.delegate = self
+        self.controller = controller
+        
+        //make fetch request
+        do{
+            try self.controller.performFetch()
+        } catch {
+            let error = error as NSError
+            print("\(error)")
+        }
+        
+        if (controller.fetchedObjects?.isEmpty)! {
+            return false
+        } else {
+            return controller.fetchedObjects![0].isRegistered
+        }
     }
     
     

@@ -47,5 +47,7 @@
 	<string>Please enable acces to your microphone.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Please enable access to your contact list.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Please enable access to your photo library.</string>
 </dict>
 </plist>
