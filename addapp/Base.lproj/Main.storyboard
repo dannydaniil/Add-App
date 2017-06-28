@@ -103,7 +103,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="LPC-44-ImY" userLabel="presentCamera">
                     <connections>
-                        <action selector="swippedRight:" destination="BYZ-38-t0r" id="0m5-su-Hob"/>
+                        <action selector="swipeRight:" destination="BYZ-38-t0r" id="K7x-k1-wE0"/>
                     </connections>
                 </swipeGestureRecognizer>
                 <swipeGestureRecognizer direction="down" id="JkZ-ca-LJm" userLabel="presentList">
@@ -530,6 +530,7 @@
                                         </prototypes>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="fwV-xf-7zn" appends="YES" id="r8c-4f-vMr"/>
+                                            <outletCollection property="gestureRecognizers" destination="fwV-xf-7zn" appends="YES" id="6xK-KG-WAq"/>
                                         </connections>
                                     </tableView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sharing Preferences" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8AQ-r5-fbB">
@@ -568,7 +569,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JEc-lA-Cno" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="up" id="fwV-xf-7zn" userLabel="presentHome"/>
+                <swipeGestureRecognizer direction="up" id="fwV-xf-7zn" userLabel="presentHome">
+                    <connections>
+                        <action selector="swipeUp:" destination="cez-TC-Ge5" id="Byd-wI-grY"/>
+                        <outlet property="delegate" destination="lu1-UZ-hSf" id="uZz-kn-6kc"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-362" y="107"/>
         </scene>

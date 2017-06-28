@@ -29,7 +29,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SignUpVC.dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
     
@@ -62,6 +62,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
         //create entity to be saved
         let user = User(context: context)
+        let accounts = Accounts(context: context)
      
         //save the attributes
         if let firstName = firstNameTextField.text {
@@ -75,30 +76,51 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
         if let mobileNumber = mobileNumberTextField.text {
             user.mobileNumber = mobileNumber
+            if mobileNumber.characters.count > 0 {
+                accounts.mobileNumber = true
+            }
         }
         
         if let workNumber = workNumberTextField.text {
             user.workNumber = workNumber
+            if workNumber.characters.count > 0 {
+                accounts.workNumber = true
+            }
         }
         
         if let email = emailTextField.text {
             user.email = email
+            if email.characters.count > 0 {
+                accounts.email = true
+            }
         }
         
         if let facebookUsername = facebookTextField.text {
             user.facebook = facebookUsername
+            if facebookUsername.characters.count > 0 {
+                accounts.facebook = true
+            }
         }
         
         if let snapchatUsername = SnapchatTextField.text {
             user.snapchat = snapchatUsername
+            if snapchatUsername.characters.count > 0 {
+                accounts.snapchat = true
+            }
         }
         
         if let instagramUsername = InstagramTextField.text {
             user.instagram = instagramUsername
+            if instagramUsername.characters.count > 0 {
+                accounts.instagram = true
+            }
         }
         
         if let linkedInUsername = LinkedInTextField.text {
             user.linkedin = linkedInUsername
+            if linkedInUsername.characters.count > 0 {
+                accounts.linkedin = true
+            }
         }
         
         if let selectedProfilePic = profilePicture.image {

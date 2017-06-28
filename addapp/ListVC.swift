@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import CoreData
 
 class ListVC : UIViewController, UITableViewDelegate,
-UITableViewDataSource {
+UITableViewDataSource, NSFetchedResultsControllerDelegate {
     
-    var profiles = ["Mobile Number", "Work Number", "Email", "Facebook", "Instagram", "Snapchat", "Twitter", "LinkedIn", "Pinterest", "Vimeo", "Venmo", "Google+", "Reddit", "Tumblr"]
+    var profiles = ["Mobile Number", "Work Number", "Email", "Facebook", "Instagram", "Snapchat", "LinkedIn", "Twitter", "Pinterest", "Vimeo", "Venmo", "Google+", "Reddit", "Tumblr"]
+    var profiles1 = ["Mobile Number", "Work Number", "Email", "Facebook", "Instagram", "Snapchat", "LinkedIn"]
     var selectedProfiles = [String]()
+    
+    var accounts: Accounts?
+    var accountsController: NSFetchedResultsController<Accounts>!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -26,19 +31,21 @@ UITableViewDataSource {
     
     override func viewDidAppear(_ animated: Bool) {
         scrollViewDidScroll(tableView)
+        
+        accounts = fetchAccountsData()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
         
-        //print(maximumOffset - contentOffset)
+        // print(maximumOffset - contentOffset)
         
         //temporary swipe up to main screen
         if maximumOffset - contentOffset == -10 {
             //let swipe = UISwipeGestureRecognizer(target: self, action:#selector(swipeUp))
             //swipe.direction = UISwipeGestureRecognizerDirection.up;
-            performSegue(withIdentifier: "swipeUp", sender: self)
+            updateCoreData()
         }
     }
     
@@ -89,8 +96,59 @@ UITableViewDataSource {
         return cell
     }
     
-    //swipe up to dismiss list
-    //    @IBAction func swipeUp(_ sender: UISwipeGestureRecognizer) {
-    //        performSegue(withIdentifier: "swipeUp", sender: self)
-    //    }
+   // swipe up to dismiss list
+//        @IBAction func swipeUp(_ sender: UISwipeGestureRecognizer) {
+//            performSegue(withIdentifier: "swipeUp", sender: self)
+//        }
+    
+    func updateCoreData() {
+        for item in profiles1 {
+            var temp = String()
+            if item == "Mobile Number" {
+                temp = "mobileNumber"
+            } else if item == "Work Number" {
+                temp = "workNumber"
+            } else {
+                temp = item.lowercased()
+            }
+            
+            if selectedProfiles.contains(item) {
+                accounts?.setValue(true, forKey: temp)
+            } else {
+                accounts?.setValue(false, forKey: temp)
+            }
+        }
+        
+        ad.saveContext()
+        performSegue(withIdentifier: "swipeUp", sender: self.view)
+    }
+    
+    func fetchAccountsData() -> Accounts{
+        
+        let fetchRequest: NSFetchRequest<Accounts> = Accounts.fetchRequest()
+        let accountsSort = NSSortDescriptor(key: "facebook", ascending: false, selector: nil)
+        
+        fetchRequest.sortDescriptors = [accountsSort]
+        
+        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        
+        controller.delegate = self
+        self.accountsController = controller
+        
+        //make fetch request
+        do {
+            try self.accountsController.performFetch()
+        } catch {
+            let error = error as NSError
+            print("\(error)")
+        }
+        
+        print(controller.fetchedObjects![0])
+        
+        if (controller.fetchedObjects?.isEmpty)! {
+            return Accounts()
+        }
+        
+        return controller.fetchedObjects![0]
+    }
 }
