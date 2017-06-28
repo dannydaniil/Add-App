@@ -161,8 +161,8 @@
 			isa = PBXGroup;
 			children = (
 				5E03D8571EFE34CB003682B5 /* RoundImageView.swift */,
-				5E0C39F81EFF418100AA69B3 /* accountCell.swift */,
 				5EDE82F71F00AA75001E8CC2 /* RoundTextFied.swift */,
+				5E0C39F81EFF418100AA69B3 /* accountCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";

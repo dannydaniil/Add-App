@@ -15,27 +15,23 @@ import CoreData
 class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorDelegate, BarcodeScannerDismissalDelegate, NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var nameLbl: UILabel!
+    @IBOutlet weak var profilePic: RoundImageView!
+    @IBOutlet weak var imgQRCode: UIImageView!
+
     var qrcodeImage: CIImage!
     var encodedText: String!
-    @IBOutlet weak var profilePic: RoundImageView!
     //must tell it what it will work with
     var controller: NSFetchedResultsController<User>!
 
-    
-    @IBOutlet weak var imgQRCode: UIImageView!
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
-    
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         if isRegisteredUser() == false {
             performSegue(withIdentifier: "SignUpVC", sender: self)
-        
         } else {
-
             nameLbl.text = fetchUserData().firstName! + " " + fetchUserData().lastName!
             
             profilePic.image = UIImage(data: (fetchUserData().profilePicture as! NSData) as Data)
@@ -44,14 +40,12 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
             //call only if any switch changed
             presentQRBarcode()
         }
-
+        
     }
-    
     
     func fetchUserData () -> User {
         
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-        
         let userSort = NSSortDescriptor(key: "firstName", ascending: false, selector: nil)
         
         //passing in the descriptor
@@ -59,8 +53,8 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
 
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         
-          controller.delegate = self
-          self.controller = controller
+        controller.delegate = self
+        self.controller = controller
         
         //make fetch request
         do{
@@ -76,7 +70,6 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     func isRegisteredUser () -> Bool {
         
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-        
         let userSort = NSSortDescriptor(key: "firstName", ascending: false, selector: nil)
         
         //passing in the descriptor
@@ -102,6 +95,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         }
     }
     
+    // TODO:
     
     @IBAction func swippedRight(_ sender: Any) {
         
@@ -112,6 +106,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         controller.dismissalDelegate = self
         present(controller, animated: true, completion: nil)
     }
+    
     
     //3 scanner functions to be changed
     
@@ -137,7 +132,6 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         dismiss(animated: true, completion: nil)
     }
 
-    
     //handle QR code generation and presentation on screen
     func presentQRBarcode() {
         if qrcodeImage == nil {
@@ -147,18 +141,19 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
             if  encodedText == "" {
                 return 
             }
-        // encode data
-        let data = encodedText.data(using: String.Encoding.isoLatin1, allowLossyConversion: false)
-        let filter = CIFilter(name: "CIQRCodeGenerator")
-        filter?.setValue(data, forKey: "inputMessage")
-        filter?.setValue("Q", forKey: "inputCorrectionLevel")
-        qrcodeImage = filter?.outputImage
-        imgQRCode.image = convert(cmage: qrcodeImage)
-        //display encoded data as QR barcode
-        displayQRCodeImage()
             
-        }
-        else {
+            // encode data
+            let data = encodedText.data(using: String.Encoding.isoLatin1, allowLossyConversion: false)
+            let filter = CIFilter(name: "CIQRCodeGenerator")
+            filter?.setValue(data, forKey: "inputMessage")
+            filter?.setValue("Q", forKey: "inputCorrectionLevel")
+            
+            qrcodeImage = filter?.outputImage
+            imgQRCode.image = convert(cmage: qrcodeImage)
+            
+            //display encoded data as QR barcode
+            displayQRCodeImage()
+        } else {
             imgQRCode.image = nil
             qrcodeImage = nil
         }
@@ -171,9 +166,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         let scaleY = imgQRCode.frame.size.height / qrcodeImage.extent.size.height
         let transformedImage = qrcodeImage.applying(CGAffineTransform(scaleX: scaleX, y: scaleY))
         imgQRCode.image = convert(cmage: transformedImage)
-        
     }
-    
     
     // I think it speaks for itself ==> adds new contact
     func createContact() {
@@ -183,7 +176,6 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         newContact.givenName = "John"
         newContact.familyName = "Appleseed"
         
-        
         // Saving contact
         let saveRequest = CNSaveRequest()
         let store = CNContactStore()
@@ -191,6 +183,9 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         try! store.execute(saveRequest)
     }
     
+    @IBAction func swipeDown(_ sender: UISwipeGestureRecognizer) {
+        performSegue(withIdentifier: "swipeDown", sender: self)
+    }
 }
 
 //convert from CIImage to UIImage

@@ -10,9 +10,8 @@ import UIKit
 import CoreData
 
 
-class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
-
     @IBOutlet weak var profilePicture: RoundImageView!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -29,7 +28,13 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     //photo picker delegate
@@ -54,49 +59,54 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     }
  
     @IBAction func doneBtnPressed(_ sender: Any) {
-     //create entity to be saved
-     let user = User(context: context)
-     
-     
-     //save the attributes
-     if let firstName = firstNameTextField.text {
-     user.firstName = firstName
-     user.isRegistered = true
-     }
-     if let lastName = lastNameTextField.text {
-     user.lastName = lastName
-     }
-     if let mobileNumber = mobileNumberTextField.text {
-     user.mobileNumber = mobileNumber
-     }
-     if let workNumber = workNumberTextField.text {
-     user.workNumber = workNumber
-     }
-     if let email = emailTextField.text {
-     user.email = email
-     }
-     if let facebookUsername = facebookTextField.text {
-     user.facebook = facebookUsername
-     }
-     if let snapchatUsername = SnapchatTextField.text {
-     user.snapchat = snapchatUsername
-     }
-     if let instagramUsername = InstagramTextField.text {
-     user.instagram = instagramUsername
-     }
-     if let linkedInUsername = LinkedInTextField.text {
-     user.linkedin = linkedInUsername
-     }
-    if let selectedProfilePic = profilePicture.image {
-            user.profilePicture = UIImagePNGRepresentation(selectedProfilePic) as NSData?
         
-    }
-    
-    
+        //create entity to be saved
+        let user = User(context: context)
      
-     ad.saveContext()
-     //performSegue(withIdentifier: "HomeVC", sender: nil)
-     dismiss(animated: true, completion: nil)
+        //save the attributes
+        if let firstName = firstNameTextField.text {
+            user.firstName = firstName
+            user.isRegistered = true
+        }
+        
+        if let lastName = lastNameTextField.text {
+            user.lastName = lastName
+        }
+        
+        if let mobileNumber = mobileNumberTextField.text {
+            user.mobileNumber = mobileNumber
+        }
+        
+        if let workNumber = workNumberTextField.text {
+            user.workNumber = workNumber
+        }
+        
+        if let email = emailTextField.text {
+            user.email = email
+        }
+        
+        if let facebookUsername = facebookTextField.text {
+            user.facebook = facebookUsername
+        }
+        
+        if let snapchatUsername = SnapchatTextField.text {
+            user.snapchat = snapchatUsername
+        }
+        
+        if let instagramUsername = InstagramTextField.text {
+            user.instagram = instagramUsername
+        }
+        
+        if let linkedInUsername = LinkedInTextField.text {
+            user.linkedin = linkedInUsername
+        }
+        
+        if let selectedProfilePic = profilePicture.image {
+            user.profilePicture = UIImagePNGRepresentation(selectedProfilePic) as NSData?
+        }
+    
+        ad.saveContext()
+        //performSegue(withIdentifier: "HomeVC", sender: nil)
+        dismiss(animated: true, completion: nil)
      }
-
 }
