@@ -42,19 +42,19 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
             performSegue(withIdentifier: "SignUpVC", sender: self)
         } else {
             user = DataService.instance.fetchUserData()
-            
-            nameLbl.text = (user?.firstName)! + " " + (user?.lastName)!
-            profilePic.image = UIImage(data: (user?.profilePicture as! NSData) as Data)
-            //createContact()
-            
             accounts = DataService.instance.fetchAccountsData()
+            
+            //present barcode
+            presentQRBarcode()
+            //present name
+            nameLbl.text = (user?.firstName)! + " " + (user?.lastName)!
+            //present picture
+            profilePic.image = UIImage(data: (user?.profilePicture as! NSData) as Data)
             
             //create a data service where only fields filled by the user show up in the list
             //instantiate true for all those fields, update tableviewcell based on the bool
             //since all these values will be instantiated a qr code will all fields will be genrated automatically
-            
-            //call only if any switch changed
-            presentQRBarcode()
+
         }
         
     }
@@ -89,9 +89,6 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     }
     
     func decryptScannedCode(encryptedCode: String) {
-        
-        //print(stringToDictionary(text: encryptedCode)!)
-        //print(type(of:stringToDictionary(text: encryptedCode)!))
         createContact(dic: stringToDictionary(text: encryptedCode)!)
     }
     
@@ -107,7 +104,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
 
     //handle QR code generation and presentation on screen
     func presentQRBarcode() {
-        if qrcodeImage == nil {
+        //if qrcodeImage == nil {
             
             var dict = Dictionary<String, AnyObject>()
             dict["first"] = user?.firstName as AnyObject
@@ -141,10 +138,10 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
             
             //display encoded data as QR barcode
             displayQRCodeImage()
-        } else {
-            imgQRCode.image = nil
-            qrcodeImage = nil
-        }
+        //} else {
+           // imgQRCode.image = nil
+            //qrcodeImage = nil
+        //}
     }
     
     //scale image to remove blur, barcode still works

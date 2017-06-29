@@ -80,7 +80,6 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         if let firstName = firstNameTextField.text {
             user.firstName = firstName
             user.isRegistered = true
-            print("changed the first name")
         }
         
         if let lastName = lastNameTextField.text {
