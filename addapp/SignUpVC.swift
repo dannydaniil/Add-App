@@ -30,6 +30,10 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if DataService.instance.isRegisteredUser() {
+            fillForms()
+        }
+        
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SignUpVC.dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
@@ -62,13 +66,21 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     @IBAction func doneBtnPressed(_ sender: Any) {
         
         //create entity to be saved
-        let user = User(context: context)
+        
+        var user: User!
+        
+        if DataService.instance.isRegisteredUser() {
+            user = DataService.instance.fetchUserData()
+        } else {
+            user = User(context: context)
+        }
         let accounts = Accounts(context: context)
      
         //save the attributes
         if let firstName = firstNameTextField.text {
             user.firstName = firstName
             user.isRegistered = true
+            print("changed the first name")
         }
         
         if let lastName = lastNameTextField.text {
@@ -139,4 +151,21 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         //performSegue(withIdentifier: "HomeVC", sender: nil)
         dismiss(animated: true, completion: nil)
      }
+    
+    func fillForms() {
+        let user = DataService.instance.fetchUserData()
+        
+        firstNameTextField.text = user.firstName
+        lastNameTextField.text = user.lastName
+        mobileNumberTextField.text = user.mobileNumber
+        workNumberTextField.text = user.workNumber
+        emailTextField.text = user.email
+        facebookTextField.text = user.facebook
+        InstagramTextField.text = user.instagram
+        TwitterTextField.text = user.twitter
+        LinkedInTextField.text = user.linkedin
+        profilePicture.image = UIImage(data: (user.profilePicture as! NSData) as Data)
+ 
+    }
+    
 }

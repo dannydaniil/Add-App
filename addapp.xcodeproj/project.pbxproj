@@ -659,6 +659,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 7K96C6F27T;
 				INFOPLIST_FILE = addapp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dcd.addapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -675,6 +676,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 7K96C6F27T;
 				INFOPLIST_FILE = addapp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dcd.addapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";

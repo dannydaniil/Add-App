@@ -17,6 +17,9 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var profilePic: RoundImageView!
     @IBOutlet weak var imgQRCode: UIImageView!
+    @IBOutlet weak var settingsBtn: UIButton!
+
+    
 
     var qrcodeImage: CIImage!
     var encodedText: String!
@@ -28,21 +31,23 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
-        if isRegisteredUser() == false {
+        
+        
+        if DataService.instance.isRegisteredUser() == false {
             performSegue(withIdentifier: "SignUpVC", sender: self)
         } else {
-            user = fetchUserData()
+            user = DataService.instance.fetchUserData()
             
             nameLbl.text = (user?.firstName)! + " " + (user?.lastName)!
             profilePic.image = UIImage(data: (user?.profilePicture as! NSData) as Data)
             //createContact()
             
-            accounts = fetchAccountsData()
+            accounts = DataService.instance.fetchAccountsData()
             
             //create a data service where only fields filled by the user show up in the list
             //instantiate true for all those fields, update tableviewcell based on the bool
@@ -54,85 +59,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         
     }
     
-    func fetchUserData() -> User {
-        
-        let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-        let userSort = NSSortDescriptor(key: "firstName", ascending: false, selector: nil)
-        
-        //passing in the descriptor
-        fetchRequest.sortDescriptors = [userSort]
-
-        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        
-        controller.delegate = self
-        self.userController = controller
-        
-        //make fetch request
-        do {
-            try self.userController.performFetch()
-        } catch {
-            let error = error as NSError
-            print("\(error)")
-        }
-        
-        return controller.fetchedObjects![0]
-    }
-    
-    func isRegisteredUser() -> Bool {
-        
-        let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-        let userSort = NSSortDescriptor(key: "firstName", ascending: false, selector: nil)
-        
-        //passing in the descriptor
-        fetchRequest.sortDescriptors = [userSort]
-        
-        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        
-        controller.delegate = self
-        self.userController = controller
-        
-        //make fetch request
-        do {
-            try self.userController.performFetch()
-        } catch {
-            let error = error as NSError
-            print("\(error)")
-        }
-        
-        if (controller.fetchedObjects?.isEmpty)! {
-            return false
-        } else {
-            return controller.fetchedObjects![0].isRegistered
-        }
-    }
-    
-    func fetchAccountsData() -> Accounts{
-        
-        let fetchRequest: NSFetchRequest<Accounts> = Accounts.fetchRequest()
-        let accountsSort = NSSortDescriptor(key: "facebook", ascending: false, selector: nil)
-        
-        fetchRequest.sortDescriptors = [accountsSort]
-
-        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        
-        controller.delegate = self
-        self.accountsController = controller
-        
-        //make fetch request
-        do {
-            try self.accountsController.performFetch()
-        } catch {
-            let error = error as NSError
-            print("\(error)")
-        }
-        
-        if (controller.fetchedObjects?.isEmpty)! {
-            return Accounts()
-        }
-        
-        return controller.fetchedObjects![0]
-    }
-    
+      
     // TODO:
     
     @IBAction func swipeRight(_ sender: Any) {
@@ -248,7 +175,17 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     @IBAction func swipeDown(_ sender: UISwipeGestureRecognizer) {
         performSegue(withIdentifier: "swipeDown", sender: self)
     }
-}
+    
+    @IBAction func seetingsBtnPressed(_ sender: UIButton) {
+        
+        performSegue(withIdentifier: "SignUpVC", sender: self)
+        
+    }
+    
+    
+} // end of class
+
+
 
 func dictionaryToString(dict: Dictionary<String, AnyObject>) -> String {
     var datastring = String()
