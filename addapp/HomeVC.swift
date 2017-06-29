@@ -233,8 +233,8 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     func createContact(dic: Dictionary<String,String>) {
         // Creating a new contact
         let newContact = CNMutableContact()
-        newContact.givenName = dic["firstName"]!
-        newContact.familyName = dic["lastName"]!
+        newContact.givenName = dic["first"]!
+        newContact.familyName = dic["last"]!
         //newContact.imageData = dic["profilePicture"]!
         
         // Saving contact
