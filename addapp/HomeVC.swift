@@ -36,8 +36,6 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     
     override func viewDidAppear(_ animated: Bool) {
         
-        
-        
         if DataService.instance.isRegisteredUser() == false {
             performSegue(withIdentifier: "SignUpVC", sender: self)
         } else {
@@ -78,10 +76,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     func barcodeScanner(_ controller: BarcodeScannerController, didCaptureCode code: String, type: String) {
         
         print(code)
-        //print(type)
-        
         decryptScannedCode(encryptedCode: code)
-        
         let delayTime = DispatchTime.now() + Double(Int64(6 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
             controller.resetWithError()
@@ -159,7 +154,13 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         let newContact = CNMutableContact()
         newContact.givenName = dic["first"]!
         newContact.familyName = dic["last"]!
-        //newContact.imageData = dic["profilePicture"]!
+        let workPhone = CNLabeledValue(label: CNLabelWork, value:CNPhoneNumber(stringValue: dic["workNumber"]!))
+        newContact.phoneNumbers = [workPhone]
+        let mobilePhone = CNLabeledValue(label: CNLabelOther, value:CNPhoneNumber(stringValue: dic["mobileNumber"]!))
+        newContact.phoneNumbers = [mobilePhone]
+        //let email = CNLabeledValue(label: CNLabelWork, value: dic["email"]! as NSSecureCoding)
+        //newContact.emailAddresses = [email]
+        
         
         // Saving contact
         let saveRequest = CNSaveRequest()
@@ -174,14 +175,11 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     }
     
     @IBAction func seetingsBtnPressed(_ sender: UIButton) {
-        
         performSegue(withIdentifier: "SignUpVC", sender: self)
-        
     }
     
     
 } // end of class
-
 
 
 func dictionaryToString(dict: Dictionary<String, AnyObject>) -> String {
