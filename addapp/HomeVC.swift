@@ -18,6 +18,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     @IBOutlet weak var profilePic: RoundImageView!
     @IBOutlet weak var imgQRCode: UIImageView!
     @IBOutlet weak var settingsBtn: UIButton!
+    
     var qrcodeImage: CIImage!
     var encodedText: String!
     //must tell it what it will work with
@@ -25,11 +26,6 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     var accountsController: NSFetchedResultsController<Accounts>!
     var user: User?
     var accounts: Accounts?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
     
     override func viewDidAppear(_ animated: Bool) {
         
@@ -77,7 +73,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     }
     
     func decryptScannedCode(encryptedCode: String) {
-        createContact(dic: stringToDictionary(text: encryptedCode)!)
+        createContact(dic: ConversionService.instance.stringToDictionary(text: encryptedCode)!)
     }
     
     //deals with error
@@ -109,7 +105,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         }
             
         //text to be encoded
-        encodedText = dictionaryToString(dict: dict)
+        encodedText = ConversionService.instance.dictionaryToString(dict: dict)
         print(encodedText)
         if  encodedText == "" {
             return
@@ -122,7 +118,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         filter?.setValue("Q", forKey: "inputCorrectionLevel")
         
         qrcodeImage = filter?.outputImage
-        imgQRCode.image = convert(cmage: qrcodeImage)
+        imgQRCode.image = ConversionService.instance.convertImage(cmage: qrcodeImage)
             
         //display encoded data as QR barcode
         displayQRCodeImage()
@@ -134,7 +130,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         let scaleX = imgQRCode.frame.size.width / qrcodeImage.extent.size.width
         let scaleY = imgQRCode.frame.size.height / qrcodeImage.extent.size.height
         let transformedImage = qrcodeImage.applying(CGAffineTransform(scaleX: scaleX, y: scaleY))
-        imgQRCode.image = convert(cmage: transformedImage)
+        imgQRCode.image = ConversionService.instance.convertImage(cmage: transformedImage)
     }
     
     //adds new contact to the contact book
@@ -167,38 +163,6 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         performSegue(withIdentifier: "SignUpVC", sender: self)
     }
 } //end of class
-
-func dictionaryToString(dict: Dictionary<String, AnyObject>) -> String {
-    var datastring = String()
-    
-    do {
-        let thisJSON = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
-        datastring = String(data: thisJSON, encoding: String.Encoding.utf8)!
-    } catch {
-        print(error)
-    }
-
-    return datastring
-}
-
-func stringToDictionary(text: String) -> [String: String]? {
-    if let data = text.data(using: .utf8) {
-        do {
-            return try JSONSerialization.jsonObject(with: data, options: []) as? [String: String]
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-    return nil
-}
-
-//convert from CIImage to UIImage
-func convert(cmage:CIImage) -> UIImage {
-    let context:CIContext = CIContext.init(options: nil)
-    let cgImage:CGImage = context.createCGImage(cmage, from: cmage.extent)!
-    let image:UIImage = UIImage.init(cgImage: cgImage)
-    return image
-}
 
 func appDelegate() -> AppDelegate {
     return UIApplication.shared.delegate as! AppDelegate

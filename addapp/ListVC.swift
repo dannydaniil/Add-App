@@ -125,7 +125,7 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
     
     func updateCoreData() {
         for item in profiles1 {
-            let temp = convertProfile(profile: item)
+            let temp = ConversionService.instance.convertProfile(profile: item)
             
             if selectedProfiles.contains(item) {
                 accounts?.setValue(true, forKey: temp)
@@ -138,7 +138,7 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
     }
     
     func profileIsSelected(profile: String) -> Bool {
-        let temp = convertProfile(profile: profile)
+        let temp = ConversionService.instance.convertProfile(profile: profile)
         if let value = accounts?.value(forKey: temp) as! Bool? {
             if value {
                 return true
@@ -149,17 +149,6 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
         return false
     }
     
-    func convertProfile(profile: String) -> String {
-        switch profile {
-        case "Mobile Number":
-            return "mobileNumber"
-        case "Work Number":
-            return "workNumber"
-        default:
-            return profile.lowercased()
-        }
-    }
-     
     @IBAction func closeBtnPressed(_ sender: Any) {
         updateCoreData()
         dismiss(animated: true, completion: nil)
