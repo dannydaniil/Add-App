@@ -17,7 +17,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var profilePic: RoundImageView!
     @IBOutlet weak var imgQRCode: UIImageView!
-
+    @IBOutlet weak var settingsBtn: UIButton!
     var qrcodeImage: CIImage!
     var encodedText: String!
     //must tell it what it will work with
@@ -33,105 +33,23 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     
     override func viewDidAppear(_ animated: Bool) {
         
-        if isRegisteredUser() == false {
+        if DataService.instance.isRegisteredUser() == false {
             performSegue(withIdentifier: "SignUpVC", sender: self)
         } else {
-            user = fetchUserData()
+            user = DataService.instance.fetchUserData()
+            accounts = DataService.instance.fetchAccountsData()
             
-            nameLbl.text = (user?.firstName)! + " " + (user?.lastName)!
-            profilePic.image = UIImage(data: (user?.profilePicture as! NSData) as Data)
-            //createContact()
-            
-            accounts = fetchAccountsData()
-            
-            //create a data service where only fields filled by the user show up in the list
-            //instantiate true for all those fields, update tableviewcell based on the bool
-            //since all these values will be instantiated a qr code will all fields will be genrated automatically
-            
-            //call only if any switch changed
+            //present barcode
             presentQRBarcode()
-        }
-        
-    }
-    
-    func fetchUserData() -> User {
-        
-        let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-        let userSort = NSSortDescriptor(key: "firstName", ascending: false, selector: nil)
-        
-        //passing in the descriptor
-        fetchRequest.sortDescriptors = [userSort]
-
-        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        
-        controller.delegate = self
-        self.userController = controller
-        
-        //make fetch request
-        do {
-            try self.userController.performFetch()
-        } catch {
-            let error = error as NSError
-            print("\(error)")
-        }
-        
-        return controller.fetchedObjects![0]
-    }
-    
-    func isRegisteredUser() -> Bool {
-        
-        let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
-        let userSort = NSSortDescriptor(key: "firstName", ascending: false, selector: nil)
-        
-        //passing in the descriptor
-        fetchRequest.sortDescriptors = [userSort]
-        
-        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        
-        controller.delegate = self
-        self.userController = controller
-        
-        //make fetch request
-        do {
-            try self.userController.performFetch()
-        } catch {
-            let error = error as NSError
-            print("\(error)")
-        }
-        
-        if (controller.fetchedObjects?.isEmpty)! {
-            return false
-        } else {
-            return controller.fetchedObjects![0].isRegistered
+            
+            //present name
+            nameLbl.text = (user?.firstName)! + " " + (user?.lastName)!
+            
+            //present picture
+            profilePic.image = UIImage(data: (user?.profilePicture as! NSData) as Data)
         }
     }
     
-    func fetchAccountsData() -> Accounts{
-        
-        let fetchRequest: NSFetchRequest<Accounts> = Accounts.fetchRequest()
-        let accountsSort = NSSortDescriptor(key: "facebook", ascending: false, selector: nil)
-        
-        fetchRequest.sortDescriptors = [accountsSort]
-
-        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        
-        controller.delegate = self
-        self.accountsController = controller
-        
-        //make fetch request
-        do {
-            try self.accountsController.performFetch()
-        } catch {
-            let error = error as NSError
-            print("\(error)")
-        }
-        
-        if (controller.fetchedObjects?.isEmpty)! {
-            return Accounts()
-        }
-        
-        return controller.fetchedObjects![0]
-    }
     
     // TODO:
     
@@ -151,10 +69,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     func barcodeScanner(_ controller: BarcodeScannerController, didCaptureCode code: String, type: String) {
         
         print(code)
-        //print(type)
-        
         decryptScannedCode(encryptedCode: code)
-        
         let delayTime = DispatchTime.now() + Double(Int64(6 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
             controller.resetWithError()
@@ -162,9 +77,6 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     }
     
     func decryptScannedCode(encryptedCode: String) {
-        
-        //print(stringToDictionary(text: encryptedCode)!)
-        //print(type(of:stringToDictionary(text: encryptedCode)!))
         createContact(dic: stringToDictionary(text: encryptedCode)!)
     }
     
@@ -180,45 +92,40 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
 
     //handle QR code generation and presentation on screen
     func presentQRBarcode() {
-//        if qrcodeImage == nil {
             
-            var dict = Dictionary<String, AnyObject>()
-            dict["first"] = user?.firstName as AnyObject
-            dict["last"] = user?.lastName as AnyObject
-//          dict["picture"] = user?.profilePicture
+        var dict = Dictionary<String, AnyObject>()
+        dict["first"] = user?.firstName as AnyObject
+        dict["last"] = user?.lastName as AnyObject
+//      dict["picture"] = user?.profilePicture
             
-            for key in (accounts?.entity.attributesByName.keys)! {
-                if let value = accounts?.value(forKey: key) as! Bool? {
-                    if value {
-                        dict[key] = user?.value(forKeyPath: key) as AnyObject
-                    } else {
-                        dict[key] = "" as AnyObject
-                    }
+        for key in (accounts?.entity.attributesByName.keys)! {
+            if let value = accounts?.value(forKey: key) as! Bool? {
+                if value {
+                    dict[key] = user?.value(forKeyPath: key) as AnyObject
+                } else {
+                    dict[key] = "" as AnyObject
                 }
             }
+        }
             
-            //text to be encoded
-            encodedText = dictionaryToString(dict: dict)
-            print(encodedText)
-            if  encodedText == "" {
-                return 
-            }
+        //text to be encoded
+        encodedText = dictionaryToString(dict: dict)
+        print(encodedText)
+        if  encodedText == "" {
+            return
+        }
             
-            // encode data
-            let data = encodedText.data(using: String.Encoding.isoLatin1, allowLossyConversion: false)
-            let filter = CIFilter(name: "CIQRCodeGenerator")
-            filter?.setValue(data, forKey: "inputMessage")
-            filter?.setValue("Q", forKey: "inputCorrectionLevel")
+        // encode data
+        let data = encodedText.data(using: String.Encoding.isoLatin1, allowLossyConversion: false)
+        let filter = CIFilter(name: "CIQRCodeGenerator")
+        filter?.setValue(data, forKey: "inputMessage")
+        filter?.setValue("Q", forKey: "inputCorrectionLevel")
+        
+        qrcodeImage = filter?.outputImage
+        imgQRCode.image = convert(cmage: qrcodeImage)
             
-            qrcodeImage = filter?.outputImage
-            imgQRCode.image = convert(cmage: qrcodeImage)
-            
-            //display encoded data as QR barcode
-            displayQRCodeImage()
-//        } else {
-//            imgQRCode.image = nil
-//            qrcodeImage = nil
-//        }
+        //display encoded data as QR barcode
+        displayQRCodeImage()
     }
     
     //scale image to remove blur, barcode still works
@@ -236,7 +143,13 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
         let newContact = CNMutableContact()
         newContact.givenName = dic["first"]!
         newContact.familyName = dic["last"]!
-        //newContact.imageData = dic["profilePicture"]!
+        let workPhone = CNLabeledValue(label: CNLabelWork, value:CNPhoneNumber(stringValue: dic["workNumber"]!))
+        newContact.phoneNumbers = [workPhone]
+        let mobilePhone = CNLabeledValue(label: CNLabelOther, value:CNPhoneNumber(stringValue: dic["mobileNumber"]!))
+        newContact.phoneNumbers = [mobilePhone]
+        //let email = CNLabeledValue(label: CNLabelWork, value: dic["email"]! as NSSecureCoding)
+        //newContact.emailAddresses = [email]
+        
         
         // Saving contact
         let saveRequest = CNSaveRequest()
@@ -249,7 +162,11 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     @IBAction func swipeDown(_ sender: UISwipeGestureRecognizer) {
         performSegue(withIdentifier: "swipeDown", sender: self)
     }
-}
+    
+    @IBAction func settingsBtnPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "SignUpVC", sender: self)
+    }
+} //end of class
 
 func dictionaryToString(dict: Dictionary<String, AnyObject>) -> String {
     var datastring = String()
@@ -260,7 +177,7 @@ func dictionaryToString(dict: Dictionary<String, AnyObject>) -> String {
     } catch {
         print(error)
     }
-    
+
     return datastring
 }
 

@@ -50,13 +50,6 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="settings_btn" translatesAutoresizingMaskIntoConstraints="NO" id="PyU-ct-LhL">
-                                        <rect key="frame" x="20" y="622" width="30" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="9fF-7F-9Hp"/>
-                                            <constraint firstAttribute="width" constant="30" id="sSV-Oz-cHN"/>
-                                        </constraints>
-                                    </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FTO-YY-NxD">
                                         <rect key="frame" x="112" y="362" width="150" height="150"/>
                                         <constraints>
@@ -64,19 +57,30 @@
                                             <constraint firstAttribute="width" constant="150" id="eeb-FS-1yu"/>
                                         </constraints>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZlS-5z-OQv" userLabel="settingsButton">
+                                        <rect key="frame" x="8" y="629" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="aFc-1V-7yy"/>
+                                            <constraint firstAttribute="width" constant="30" id="fZ6-Ne-Oa3"/>
+                                        </constraints>
+                                        <state key="normal" image="settings_btn"/>
+                                        <connections>
+                                            <action selector="settingsBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mOf-cN-xpr"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.55443447828292847" green="0.90735375881195068" blue="0.84315782785415649" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="bYD-9D-lT1" firstAttribute="top" secondItem="CeL-5e-3vV" secondAttribute="top" constant="50" id="1ww-gN-lT2"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZlS-5z-OQv" secondAttribute="bottom" constant="8" id="C8I-uY-srK"/>
                                     <constraint firstItem="vaA-Cr-oXE" firstAttribute="top" secondItem="bYD-9D-lT1" secondAttribute="bottom" constant="20" id="Fd6-wn-PY7"/>
                                     <constraint firstItem="FTO-YY-NxD" firstAttribute="top" secondItem="vaA-Cr-oXE" secondAttribute="bottom" constant="70" id="K8g-gx-GfQ"/>
                                     <constraint firstItem="bYD-9D-lT1" firstAttribute="centerX" secondItem="CeL-5e-3vV" secondAttribute="centerX" id="RCb-YU-VQC"/>
-                                    <constraint firstItem="PyU-ct-LhL" firstAttribute="leading" secondItem="CeL-5e-3vV" secondAttribute="leading" constant="20" id="WgZ-pa-STx"/>
+                                    <constraint firstItem="ZlS-5z-OQv" firstAttribute="leading" secondItem="CeL-5e-3vV" secondAttribute="leading" constant="8" id="W6l-aN-NJb"/>
                                     <constraint firstItem="bYD-9D-lT1" firstAttribute="centerX" secondItem="CeL-5e-3vV" secondAttribute="centerX" id="af3-Zd-dXa"/>
                                     <constraint firstItem="FTO-YY-NxD" firstAttribute="centerX" secondItem="CeL-5e-3vV" secondAttribute="centerX" id="bz7-5O-BSp"/>
                                     <constraint firstItem="vaA-Cr-oXE" firstAttribute="centerX" secondItem="CeL-5e-3vV" secondAttribute="centerX" id="d8z-wo-1r2"/>
-                                    <constraint firstAttribute="bottom" secondItem="PyU-ct-LhL" secondAttribute="bottom" constant="15" id="dhi-0x-rGy"/>
                                 </constraints>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="LPC-44-ImY" appends="YES" id="XQU-Ng-Jvg"/>
@@ -96,6 +100,7 @@
                         <outlet property="imgQRCode" destination="FTO-YY-NxD" id="CYa-Zc-osz"/>
                         <outlet property="nameLbl" destination="bYD-9D-lT1" id="7Dw-GI-5li"/>
                         <outlet property="profilePic" destination="vaA-Cr-oXE" id="5Z6-wk-NS9"/>
+                        <outlet property="settingsBtn" destination="ZlS-5z-OQv" id="X87-7k-EGP"/>
                         <segue destination="cez-TC-Ge5" kind="show" identifier="swipeDown" id="EuP-kK-GNH"/>
                         <segue destination="sH8-jO-UkX" kind="show" identifier="SignUpVC" id="iwV-Su-GpB"/>
                     </connections>
@@ -217,7 +222,6 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="lu1-UZ-hSf" id="zUo-y7-YbN"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="swipeUp" id="NoZ-gC-Has"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JEc-lA-Cno" userLabel="First Responder" sceneMemberID="firstResponder"/>

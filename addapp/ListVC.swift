@@ -28,8 +28,7 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
         tableView.dataSource = self
         tableView.allowsMultipleSelection = true
         
-        accounts = fetchAccountsData()
-        
+        accounts = DataService.instance.fetchAccountsData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -102,11 +101,6 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
         return cell
     }
     
-   // swipe up to dismiss list
-//        @IBAction func swipeUp(_ sender: UISwipeGestureRecognizer) {
-//            performSegue(withIdentifier: "swipeUp", sender: self)
-//        }
-    
     func updateCoreData() {
         for item in profiles1 {
             var temp = String()
@@ -127,34 +121,7 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
         
         ad.saveContext()
     }
-    
-    func fetchAccountsData() -> Accounts{
-        
-        let fetchRequest: NSFetchRequest<Accounts> = Accounts.fetchRequest()
-        let accountsSort = NSSortDescriptor(key: "facebook", ascending: false, selector: nil)
-        
-        fetchRequest.sortDescriptors = [accountsSort]
-        
-        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        
-        controller.delegate = self
-        self.accountsController = controller
-        
-        //make fetch request
-        do {
-            try self.accountsController.performFetch()
-        } catch {
-            let error = error as NSError
-            print("\(error)")
-        }
-                
-        if (controller.fetchedObjects?.isEmpty)! {
-            return Accounts()
-        }
-        
-        return controller.fetchedObjects![0]
-    }
-    
+     
     @IBAction func closeBtnPressed(_ sender: Any) {
         updateCoreData()
         dismiss(animated: true, completion: nil)
