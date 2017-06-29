@@ -180,7 +180,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
 
     //handle QR code generation and presentation on screen
     func presentQRBarcode() {
-        if qrcodeImage == nil {
+//        if qrcodeImage == nil {
             
             var dict = Dictionary<String, AnyObject>()
             dict["first"] = user?.firstName as AnyObject
@@ -199,6 +199,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
             
             //text to be encoded
             encodedText = dictionaryToString(dict: dict)
+            print(encodedText)
             if  encodedText == "" {
                 return 
             }
@@ -214,10 +215,10 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
             
             //display encoded data as QR barcode
             displayQRCodeImage()
-        } else {
-            imgQRCode.image = nil
-            qrcodeImage = nil
-        }
+//        } else {
+//            imgQRCode.image = nil
+//            qrcodeImage = nil
+//        }
     }
     
     //scale image to remove blur, barcode still works

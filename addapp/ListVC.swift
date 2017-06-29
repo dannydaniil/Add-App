@@ -27,27 +27,32 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsMultipleSelection = true
+        
+        accounts = fetchAccountsData()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        scrollViewDidScroll(tableView)
-        
-        accounts = fetchAccountsData()
+//        scrollViewDidScroll(tableView)
+//        for cell in tableView.visibleCells as [UITableViewCell] {
+//            
+//        }
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentOffset = scrollView.contentOffset.y
-        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-        
-        // print(maximumOffset - contentOffset)
-        
-        //temporary swipe up to main screen
-        if maximumOffset - contentOffset == -10 {
-            //let swipe = UISwipeGestureRecognizer(target: self, action:#selector(swipeUp))
-            //swipe.direction = UISwipeGestureRecognizerDirection.up;
-            updateCoreData()
-        }
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let contentOffset = scrollView.contentOffset.y
+//        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+//        
+//        // print(maximumOffset - contentOffset)
+//        
+//        //temporary swipe up to main screen
+//        if maximumOffset - contentOffset == -10 {
+//            //let swipe = UISwipeGestureRecognizer(target: self, action:#selector(swipeUp))
+//            //swipe.direction = UISwipeGestureRecognizerDirection.up;
+//            
+//        }
+//    }
+    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -84,11 +89,14 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
         cell.configureCell(accountType: name)
         cell.selectionStyle = .none
         
-        let index = selectedProfiles.index(of: name)
-        if index != nil {
-            cell.setCheckmark(selected: true)
-        } else {
-            cell.setCheckmark(selected: false)
+        let index1 = profiles1.index(of: name)
+        if index1 != nil {
+            let index = selectedProfiles.index(of: name)
+            if index != nil {
+                cell.setCheckmark(selected: true)
+            } else {
+                cell.setCheckmark(selected: false)
+            }
         }
         
         return cell
@@ -118,7 +126,6 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
         }
         
         ad.saveContext()
-        performSegue(withIdentifier: "swipeUp", sender: self.view)
     }
     
     func fetchAccountsData() -> Accounts{
@@ -146,5 +153,10 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
         }
         
         return controller.fetchedObjects![0]
+    }
+    
+    @IBAction func closeBtnPressed(_ sender: Any) {
+        updateCoreData()
+        dismiss(animated: true, completion: nil)
     }
 }
