@@ -14,8 +14,6 @@ class accountCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        setCheckmark(selected: false)
     }
     
     func configureCell(accountType: String){

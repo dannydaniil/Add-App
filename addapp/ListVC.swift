@@ -20,7 +20,7 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
     var accountsController: NSFetchedResultsController<Accounts>!
     
     @IBOutlet weak var tableView: UITableView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,29 +29,9 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
         tableView.allowsMultipleSelection = true
         
         accounts = DataService.instance.fetchAccountsData()
+        
+        tableView.reloadData()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-//        scrollViewDidScroll(tableView)
-//        for cell in tableView.visibleCells as [UITableViewCell] {
-//            
-//        }
-    }
-    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let contentOffset = scrollView.contentOffset.y
-//        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-//        
-//        // print(maximumOffset - contentOffset)
-//        
-//        //temporary swipe up to main screen
-//        if maximumOffset - contentOffset == -10 {
-//            //let swipe = UISwipeGestureRecognizer(target: self, action:#selector(swipeUp))
-//            //swipe.direction = UISwipeGestureRecognizerDirection.up;
-//            
-//        }
-//    }
-    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -67,17 +47,59 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! accountCell
-        cell.setCheckmark(selected: true)
+        let name = profiles[indexPath.row]
+        let selected = profileIsSelected(profile: name)
         
-        selectedProfiles.append(profiles[indexPath.row])
+        if selected {
+            cell.setCheckmark(selected: false)
+            if let index = selectedProfiles.index(of: profiles[indexPath.row]) {
+                selectedProfiles.remove(at: index)
+                print("deselected")
+                print(selectedProfiles)
+            }
+        } else {
+            cell.setCheckmark(selected: true)
+            selectedProfiles.append(profiles[indexPath.row])
+            print("selected")
+            print(selectedProfiles)
+        }
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! accountCell
-        cell.setCheckmark(selected: false)
+        let name = profiles[indexPath.row]
+        let selected = profileIsSelected(profile: name)
         
-        if let index = selectedProfiles.index(of: profiles[indexPath.row]) {
-            selectedProfiles.remove(at: index)
+        if !selected {
+            cell.setCheckmark(selected: false)
+            if let index = selectedProfiles.index(of: profiles[indexPath.row]) {
+                selectedProfiles.remove(at: index)
+                print("deselected")
+                print(selectedProfiles)
+            }
+        } else {
+            cell.setCheckmark(selected: true)
+            selectedProfiles.append(profiles[indexPath.row])
+            print("selected")
+            print(selectedProfiles)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let myCell = cell as? accountCell {
+            let name = profiles[indexPath.row]
+            
+            let index1 = profiles1.index(of: name)
+            if index1 != nil {
+                let selected = profileIsSelected(profile: name)
+                myCell.setCheckmark(selected: selected)
+                if selected {
+                    selectedProfiles.append(name)
+                    print("will display")
+                    print(selectedProfiles)
+                }
+            }
+
         }
     }
     
@@ -103,14 +125,7 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
     
     func updateCoreData() {
         for item in profiles1 {
-            var temp = String()
-            if item == "Mobile Number" {
-                temp = "mobileNumber"
-            } else if item == "Work Number" {
-                temp = "workNumber"
-            } else {
-                temp = item.lowercased()
-            }
+            let temp = convertProfile(profile: item)
             
             if selectedProfiles.contains(item) {
                 accounts?.setValue(true, forKey: temp)
@@ -120,6 +135,29 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
         }
         
         ad.saveContext()
+    }
+    
+    func profileIsSelected(profile: String) -> Bool {
+        let temp = convertProfile(profile: profile)
+        if let value = accounts?.value(forKey: temp) as! Bool? {
+            if value {
+                return true
+            } else {
+                return false
+            }
+        }
+        return false
+    }
+    
+    func convertProfile(profile: String) -> String {
+        switch profile {
+        case "Mobile Number":
+            return "mobileNumber"
+        case "Work Number":
+            return "workNumber"
+        default:
+            return profile.lowercased()
+        }
     }
      
     @IBAction func closeBtnPressed(_ sender: Any) {
