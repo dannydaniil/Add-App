@@ -49,6 +49,8 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
             //present picture
             profilePic.image = UIImage(data: (user?.profilePicture as! NSData) as Data)
             
+            //profilePic.image = UIImage(data:(user?.profilePicture as Data?)!)
+            
             //create a data service where only fields filled by the user show up in the list
             //instantiate true for all those fields, update tableviewcell based on the bool
             //since all these values will be instantiated a qr code will all fields will be genrated automatically
@@ -104,8 +106,9 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
             var dict = Dictionary<String, AnyObject>()
             dict["first"] = user?.firstName as AnyObject
             dict["last"] = user?.lastName as AnyObject
-//          dict["picture"] = user?.profilePicture
-            
+        
+            //dict["picture"] = user?.profilePicture
+        
             for key in (accounts?.entity.attributesByName.keys)! {
                 if let value = accounts?.value(forKey: key) as! Bool? {
                     if value {
@@ -133,10 +136,7 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
             
             //display encoded data as QR barcode
             displayQRCodeImage()
-        //} else {
-           // imgQRCode.image = nil
-            //qrcodeImage = nil
-        //}
+
     }
     
     //scale image to remove blur, barcode still works
@@ -151,15 +151,40 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     //adds new contact to the contact book
     func createContact(dic: Dictionary<String,String>) {
         // Creating a new contact
+        
+        //save name
         let newContact = CNMutableContact()
         newContact.givenName = dic["first"]!
         newContact.familyName = dic["last"]!
+    
+        //save picture
+        //newContact.imageData = dic["profilePicture"]
+        
+
+        //save numbers
         let workPhone = CNLabeledValue(label: CNLabelWork, value:CNPhoneNumber(stringValue: dic["workNumber"]!))
-        newContact.phoneNumbers = [workPhone]
+        
         let mobilePhone = CNLabeledValue(label: CNLabelOther, value:CNPhoneNumber(stringValue: dic["mobileNumber"]!))
-        newContact.phoneNumbers = [mobilePhone]
-        //let email = CNLabeledValue(label: CNLabelWork, value: dic["email"]! as NSSecureCoding)
-        //newContact.emailAddresses = [email]
+        newContact.phoneNumbers = [mobilePhone,workPhone]
+        
+        //save email
+        let workEmail = CNLabeledValue(label:"Email", value:dic["email"]! as NSString)
+        newContact.emailAddresses = [workEmail]
+        
+        //save social profiles
+        let facebookProfile = CNLabeledValue(label: "Facebook", value: CNSocialProfile(urlString: "https://www.facebook.com", username: dic["facebook"], userIdentifier: dic["facebook"], service: CNSocialProfileServiceFacebook))
+        
+        let twitterProfile = CNLabeledValue(label: "Twitter", value: CNSocialProfile(urlString: "https://twitter.com", username: dic["twitter"], userIdentifier: dic["twitter"], service: CNSocialProfileServiceTwitter))
+        
+        let linkedinProfile = CNLabeledValue(label: "LinkedIn", value: CNSocialProfile(urlString: "https://linkedin.com", username: dic["linkedin"], userIdentifier: dic["linkedin"], service: CNSocialProfileServiceLinkedIn))
+        
+        //must init social profile because DNE
+        let instagramProfile = CNLabeledValue(label: "Instagram", value: CNSocialProfile.init(urlString: "https://instagram.com", username: dic["instagram"], userIdentifier: dic["instagram"], service: "Instagram"))
+        
+        //must init social profile because DNE
+        let snapchatProfile = CNLabeledValue(label: "Snapchat", value: CNSocialProfile.init(urlString: "https://snapchat.com", username: dic["snapchat"], userIdentifier: dic["snapchat"], service: "Snapchat"))
+    
+        newContact.socialProfiles = [facebookProfile, twitterProfile,linkedinProfile,instagramProfile,snapchatProfile]
         
         
         // Saving contact

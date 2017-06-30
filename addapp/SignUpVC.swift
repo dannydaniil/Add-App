@@ -144,6 +144,11 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
         if let selectedProfilePic = profilePicture.image {
             user.profilePicture = UIImagePNGRepresentation(selectedProfilePic) as NSData?
+//            
+//            let png = UIImagePNGRepresentation(selectedProfilePic) as NSData?
+//            let imageStr = png?.base64EncodedString(options: .lineLength64Characters)
+//            
+//            user.profilePicture = imageStr
         }
     
         ad.saveContext()
