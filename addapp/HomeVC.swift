@@ -135,16 +135,37 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     
     //adds new contact to the contact book
     func createContact(dic: Dictionary<String,String>) {
+        
         // Creating a new contact
         let newContact = CNMutableContact()
         newContact.givenName = dic["first"]!
         newContact.familyName = dic["last"]!
+        
+        //save numbers
         let workPhone = CNLabeledValue(label: CNLabelWork, value:CNPhoneNumber(stringValue: dic["workNumber"]!))
-        newContact.phoneNumbers = [workPhone]
         let mobilePhone = CNLabeledValue(label: CNLabelOther, value:CNPhoneNumber(stringValue: dic["mobileNumber"]!))
-        newContact.phoneNumbers = [mobilePhone]
-        //let email = CNLabeledValue(label: CNLabelWork, value: dic["email"]! as NSSecureCoding)
-        //newContact.emailAddresses = [email]
+        
+        newContact.phoneNumbers = [mobilePhone,workPhone]
+        
+        //save email
+        let workEmail = CNLabeledValue(label:"Email", value:dic["email"]! as NSString)
+        newContact.emailAddresses = [workEmail]
+        
+        //save social profiles
+        let facebookProfile = CNLabeledValue(label: "Facebook", value: CNSocialProfile(urlString: "https://www.facebook.com", username: dic["facebook"], userIdentifier: dic["facebook"], service: CNSocialProfileServiceFacebook))
+        
+        let twitterProfile = CNLabeledValue(label: "Twitter", value: CNSocialProfile(urlString: "https://twitter.com", username: dic["twitter"], userIdentifier: dic["twitter"], service: CNSocialProfileServiceTwitter))
+        
+        let linkedinProfile = CNLabeledValue(label: "LinkedIn", value: CNSocialProfile(urlString: "https://linkedin.com", username: dic["linkedin"], userIdentifier: dic["linkedin"], service: CNSocialProfileServiceLinkedIn))
+        
+        //must init social profile because DNE
+        let instagramProfile = CNLabeledValue(label: "Instagram", value: CNSocialProfile.init(urlString: "https://instagram.com", username: dic["instagram"], userIdentifier: dic["instagram"], service: "Instagram"))
+        
+        //must init social profile because DNE
+        let snapchatProfile = CNLabeledValue(label: "Snapchat", value: CNSocialProfile.init(urlString: "https://snapchat.com", username: dic["snapchat"], userIdentifier: dic["snapchat"], service: "Snapchat"))
+        
+        newContact.socialProfiles = [facebookProfile, twitterProfile,linkedinProfile,instagramProfile,snapchatProfile]
+
         
         
         // Saving contact
