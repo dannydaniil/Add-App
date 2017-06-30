@@ -97,4 +97,9 @@ class DataService: NSObject, NSFetchedResultsControllerDelegate {
         
         return controller.fetchedObjects![0]
     }
+    
+    func getProfiles() -> [String] {
+        //return only those profiles that were entered by user
+        return [String]()
+    }
 }

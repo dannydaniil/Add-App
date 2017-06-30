@@ -12,8 +12,8 @@ import CoreData
 class ListVC : UIViewController, UITableViewDelegate,
 UITableViewDataSource, NSFetchedResultsControllerDelegate {
     
-    var profiles = ["Mobile Number", "Work Number", "Email", "Facebook", "Instagram", "Snapchat", "LinkedIn", "Twitter", "Pinterest", "Vimeo", "Venmo", "Google+", "Reddit", "Tumblr"]
-    var profiles1 = ["Mobile Number", "Work Number", "Email", "Facebook", "Instagram", "Snapchat", "LinkedIn", "Twitter"]
+//    var profiles = ["Mobile Number", "Work Number", "Email", "Facebook", "Instagram", "Snapchat", "LinkedIn", "Twitter", "Pinterest", "Vimeo", "Venmo", "Google+", "Reddit", "Tumblr"]
+    var profiles = ["Mobile Number", "Work Number", "Email", "Facebook", "Instagram", "Snapchat", "LinkedIn", "Twitter"]
     var selectedProfiles = [String]()
     
     var accounts: Accounts?
@@ -54,14 +54,14 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
             cell.setCheckmark(selected: false)
             if let index = selectedProfiles.index(of: profiles[indexPath.row]) {
                 selectedProfiles.remove(at: index)
-                print("deselected")
-                print(selectedProfiles)
+//                print("deselected")
+//                print(selectedProfiles)
             }
         } else {
             cell.setCheckmark(selected: true)
             selectedProfiles.append(profiles[indexPath.row])
-            print("selected")
-            print(selectedProfiles)
+//            print("selected")
+//            print(selectedProfiles)
         }
     }
     
@@ -74,14 +74,14 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
             cell.setCheckmark(selected: false)
             if let index = selectedProfiles.index(of: profiles[indexPath.row]) {
                 selectedProfiles.remove(at: index)
-                print("deselected")
-                print(selectedProfiles)
+//                print("deselected")
+//                print(selectedProfiles)
             }
         } else {
             cell.setCheckmark(selected: true)
             selectedProfiles.append(profiles[indexPath.row])
-            print("selected")
-            print(selectedProfiles)
+//            print("selected")
+//            print(selectedProfiles)
         }
     }
     
@@ -89,17 +89,13 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
         if let myCell = cell as? accountCell {
             let name = profiles[indexPath.row]
             
-            let index1 = profiles1.index(of: name)
-            if index1 != nil {
-                let selected = profileIsSelected(profile: name)
-                myCell.setCheckmark(selected: selected)
-                if selected {
-                    selectedProfiles.append(name)
-                    print("will display")
-                    print(selectedProfiles)
-                }
+            let selected = profileIsSelected(profile: name)
+            myCell.setCheckmark(selected: selected)
+            if selected {
+                selectedProfiles.append(name)
+//                print("will display")
+//                print(selectedProfiles)
             }
-
         }
     }
     
@@ -110,21 +106,18 @@ UITableViewDataSource, NSFetchedResultsControllerDelegate {
         cell.configureCell(accountType: name)
         cell.selectionStyle = .none
         
-        let index1 = profiles1.index(of: name)
-        if index1 != nil {
-            let index = selectedProfiles.index(of: name)
-            if index != nil {
-                cell.setCheckmark(selected: true)
-            } else {
-                cell.setCheckmark(selected: false)
-            }
+        let index = selectedProfiles.index(of: name)
+        if index != nil {
+            cell.setCheckmark(selected: true)
+        } else {
+            cell.setCheckmark(selected: false)
         }
         
         return cell
     }
     
     func updateCoreData() {
-        for item in profiles1 {
+        for item in profiles {
             let temp = ConversionService.instance.convertProfile(profile: item)
             
             if selectedProfiles.contains(item) {
