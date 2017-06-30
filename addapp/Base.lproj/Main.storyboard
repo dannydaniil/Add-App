@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="k6D-oB-lhf">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,10 +10,18 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Root Page View Controller-->
+        <scene sceneID="80T-7Q-hRm">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="k6D-oB-lhf" customClass="RootPageViewController" customModule="addapp" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ekm-8C-e1f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2322" y="107"/>
+        </scene>
         <!--HomeVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="HomeVC" customModule="addapp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="homeVC" id="BYZ-38-t0r" customClass="HomeVC" customModule="addapp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -83,7 +91,6 @@
                                     <constraint firstItem="vaA-Cr-oXE" firstAttribute="centerX" secondItem="CeL-5e-3vV" secondAttribute="centerX" id="d8z-wo-1r2"/>
                                 </constraints>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="LPC-44-ImY" appends="YES" id="XQU-Ng-Jvg"/>
                                     <outletCollection property="gestureRecognizers" destination="JkZ-ca-LJm" appends="YES" id="qap-3k-Oav"/>
                                 </connections>
                             </view>
@@ -101,16 +108,11 @@
                         <outlet property="nameLbl" destination="bYD-9D-lT1" id="7Dw-GI-5li"/>
                         <outlet property="profilePic" destination="vaA-Cr-oXE" id="5Z6-wk-NS9"/>
                         <outlet property="settingsBtn" destination="ZlS-5z-OQv" id="X87-7k-EGP"/>
-                        <segue destination="cez-TC-Ge5" kind="show" identifier="swipeDown" id="EuP-kK-GNH"/>
                         <segue destination="sH8-jO-UkX" kind="show" identifier="SignUpVC" id="iwV-Su-GpB"/>
+                        <segue destination="cez-TC-Ge5" kind="custom" identifier="swipeDown" customClass="SlideDownSegue" customModule="addapp" customModuleProvider="target" id="D36-I0-evR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="LPC-44-ImY" userLabel="presentCamera">
-                    <connections>
-                        <action selector="swipeRight:" destination="BYZ-38-t0r" id="K7x-k1-wE0"/>
-                    </connections>
-                </swipeGestureRecognizer>
                 <swipeGestureRecognizer direction="down" id="JkZ-ca-LJm" userLabel="presentList">
                     <connections>
                         <action selector="swipeDown:" destination="BYZ-38-t0r" id="bYJ-dy-fuU"/>
@@ -122,7 +124,7 @@
         <!--ListVC-->
         <scene sceneID="VYO-1K-Ey7">
             <objects>
-                <viewController id="cez-TC-Ge5" customClass="ListVC" customModule="addapp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="preferencesVC" id="cez-TC-Ge5" customClass="ListVC" customModule="addapp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tOY-6A-r16"/>
                         <viewControllerLayoutGuide type="bottom" id="psh-vc-zpD"/>
@@ -231,12 +233,30 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-362.39999999999998" y="106.59670164917542"/>
+            <point key="canvasLocation" x="-1199" y="-715"/>
+        </scene>
+        <!--CameraVC-->
+        <scene sceneID="Ej0-MG-suE">
+            <objects>
+                <viewController storyboardIdentifier="cameraVC" id="7FB-Yv-rlL" userLabel="CameraVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="L8j-VO-0GD"/>
+                        <viewControllerLayoutGuide type="bottom" id="0SF-vG-pG5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ms6-RA-hCy">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gom-rF-cun" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-175" y="107"/>
         </scene>
         <!--Sign UpVC-->
         <scene sceneID="FSY-tT-d6C">
             <objects>
-                <viewController id="sH8-jO-UkX" customClass="SignUpVC" customModule="addapp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="settingsVC" id="sH8-jO-UkX" customClass="SignUpVC" customModule="addapp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="oTD-T3-HHP"/>
                         <viewControllerLayoutGuide type="bottom" id="4lr-lV-phd"/>

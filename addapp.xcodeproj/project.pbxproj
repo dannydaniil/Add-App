@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		26230D631F04A11D00CC67D9 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26230D621F04A11D00CC67D9 /* DataService.swift */; };
 		266E3E281F05B0E300786BC3 /* ConversionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266E3E271F05B0E300786BC3 /* ConversionService.swift */; };
+		266E3E311F05F13200786BC3 /* RootPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266E3E301F05F13200786BC3 /* RootPageViewController.swift */; };
+		266E3E331F05F77D00786BC3 /* SlideDownSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266E3E321F05F77D00786BC3 /* SlideDownSegue.swift */; };
 		285511F414B966B06C978FDF /* Pods_addappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26C2EDC9E469B3C77F99816E /* Pods_addappUITests.framework */; };
 		5779FAE6FD01C550E4EC81F4 /* Pods_addappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AD9FBF989B2B636124C948E /* Pods_addappTests.framework */; };
 		5E03D8251EFE27F8003682B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E03D8241EFE27F8003682B5 /* AppDelegate.swift */; };
@@ -48,6 +50,8 @@
 		038B53E9870AB52F00DDDCC5 /* Pods-addappUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-addappUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-addappUITests/Pods-addappUITests.release.xcconfig"; sourceTree = "<group>"; };
 		26230D621F04A11D00CC67D9 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		266E3E271F05B0E300786BC3 /* ConversionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversionService.swift; sourceTree = "<group>"; };
+		266E3E301F05F13200786BC3 /* RootPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootPageViewController.swift; sourceTree = "<group>"; };
+		266E3E321F05F77D00786BC3 /* SlideDownSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideDownSegue.swift; sourceTree = "<group>"; };
 		26C2EDC9E469B3C77F99816E /* Pods_addappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_addappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F23842B59B7270942B320CD /* Pods-addappUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-addappUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-addappUITests/Pods-addappUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		495F8D002B6847881934F321 /* Pods-addappTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-addappTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-addappTests/Pods-addappTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -134,6 +138,8 @@
 				5E03D8521EFE2A87003682B5 /* View */,
 				5E03D8541EFE2AA7003682B5 /* Controller */,
 				5E03D8241EFE27F8003682B5 /* AppDelegate.swift */,
+				266E3E301F05F13200786BC3 /* RootPageViewController.swift */,
+				266E3E321F05F77D00786BC3 /* SlideDownSegue.swift */,
 				5E03D8281EFE27F8003682B5 /* Main.storyboard */,
 				5E03D82B1EFE27F8003682B5 /* Assets.xcassets */,
 				5E03D82D1EFE27F8003682B5 /* LaunchScreen.storyboard */,
@@ -501,9 +507,11 @@
 				5E2E1C3D1F02215700CE26A7 /* userInfo.xcdatamodeld in Sources */,
 				5E2E1C3A1F01F42B00CE26A7 /* SignUpVC.swift in Sources */,
 				5EDE82F81F00AA75001E8CC2 /* RoundTextFied.swift in Sources */,
+				266E3E331F05F77D00786BC3 /* SlideDownSegue.swift in Sources */,
 				5E03D8271EFE27F8003682B5 /* HomeVC.swift in Sources */,
 				5EF7B5B51EFF3CD0003EF7D6 /* ListVC.swift in Sources */,
 				5E03D8251EFE27F8003682B5 /* AppDelegate.swift in Sources */,
+				266E3E311F05F13200786BC3 /* RootPageViewController.swift in Sources */,
 				5E0C39F91EFF418100AA69B3 /* accountCell.swift in Sources */,
 				5E03D8581EFE34CB003682B5 /* RoundImageView.swift in Sources */,
 			);

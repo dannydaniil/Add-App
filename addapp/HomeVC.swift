@@ -49,15 +49,15 @@ class HomeVC: UIViewController, BarcodeScannerCodeDelegate, BarcodeScannerErrorD
     
     // TODO:
     
-    @IBAction func swipeRight(_ sender: Any) {
-        
-        //present the scanner
-        let controller = BarcodeScannerController()
-        controller.codeDelegate = self
-        controller.errorDelegate = self
-        controller.dismissalDelegate = self
-        present(controller, animated: true, completion: nil)
-    }
+//    @IBAction func swipeRight(_ sender: Any) {
+//        
+//        //present the scanner
+//        let controller = BarcodeScannerController()
+//        controller.codeDelegate = self
+//        controller.errorDelegate = self
+//        controller.dismissalDelegate = self
+//        present(controller, animated: true, completion: nil)
+//    }
     
     //3 scanner functions to be changed
     
